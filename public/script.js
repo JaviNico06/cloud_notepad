@@ -1,13 +1,18 @@
 document.getElementById('saveNote').addEventListener('click', () => {
     const note = document.getElementById('note').value;
-    fetch('/save', {
+    fetch('/api/save', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ note }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             alert('Note saved successfully!');
@@ -21,8 +26,13 @@ document.getElementById('saveNote').addEventListener('click', () => {
 });
 
 document.getElementById('loadNote').addEventListener('click', () => {
-    fetch('/load')
-    .then(response => response.json())
+    fetch('/api/load')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
         document.getElementById('note').value = data.note;
     })
