@@ -1,5 +1,6 @@
 document.getElementById('saveNote').addEventListener('click', () => {
     const note = document.getElementById('note').value;
+    console.log('Saving note:', note); 
     fetch('/api/save', {
         method: 'POST',
         headers: {
@@ -26,6 +27,7 @@ document.getElementById('saveNote').addEventListener('click', () => {
 });
 
 document.getElementById('loadNote').addEventListener('click', () => {
+    console.log('Loading note'); 
     fetch('/api/load')
     .then(response => {
         if (!response.ok) {
@@ -35,6 +37,7 @@ document.getElementById('loadNote').addEventListener('click', () => {
     })
     .then(data => {
         document.getElementById('note').value = data.note;
+        console.log('Note loaded:', data.note); 
     })
     .catch(error => {
         console.error('Error:', error);
